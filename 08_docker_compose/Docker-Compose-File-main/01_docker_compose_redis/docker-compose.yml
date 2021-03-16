@@ -1,0 +1,12 @@
+version: '3' #目前使用的版本
+services:  # services 關鍵字後面列出web, redis兩項專案中的服務
+  web:
+    build:. # Build在同一資料夾的 Dockerfile (描述 Image 要組成的 yaml 檔案) 成 container
+    ports:
+      - "5000:5000" # 外部露出開放的port對應到docker container的port
+    volumes:
+      - .:/code # 要從本地資料夾mount掛載進去的資料
+    links:
+      - redis # 連結到redis讓兩個container可以互通網路
+    redis:
+      image:redis # 從redis image build出container

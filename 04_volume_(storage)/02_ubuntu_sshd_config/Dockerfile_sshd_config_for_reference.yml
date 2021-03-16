@@ -1,0 +1,18 @@
+# Docker Container 啟動後立即結束的解決方法
+# https://www.arthurtoday.com/2016/07/docker-container-auto-stop-problem.html
+# 使用前，請先自備 sshd_config 檔
+
+FROM ubuntu
+
+RUN apt-get update && apt-get install openssh-server -y
+RUN apt-get install git -y
+RUN mkdir /var/run/sshd
+RUN echo 'root:123456' | chpasswd
+RUN useradd git
+RUN mkdir -p /home/ayubiz/.ssh
+
+ADD sshd_config /etc/ssh/sshd_config
+
+VOLUME /home/ayubiz
+EXPOSE 10022
+CMD ["/usr/sbin/sshd", "-D"]

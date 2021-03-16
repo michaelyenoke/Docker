@@ -1,0 +1,25 @@
+# install python3 gcc
+sudo yum install -y python3 libpq-dev python3-dev
+sudo yum install -y gcc gcc-c++
+
+# add following into ~/.bashrc
+echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
+echo "alias python=python3" >> ~/.bashrc
+echo "alias pip=pip3" >> ~/.bashrc
+source ~/.bashrc
+python --version
+
+# install docker
+sudo yum -y install docker
+sudo usermod -a -G docker ec2-user
+sudo systemctl start docker
+sudo systemctl status docker
+sudo systemctl enable docker
+sudo chmod 666 /var/run/docker.sock
+docker ps
+
+# install docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose --version

@@ -1,0 +1,24 @@
+# 參考文章https://docs.docker.com/compose/gettingstarted/#step-8-experiment-with-some-other-commands
+# 參考文章：https://blog.techbridge.cc/2018/09/07/docker-compose-tutorial-intro/
+# 需要按照官方文檔進行縮排： https://docs.docker.com/compose/compose-file/compose-file-v3/
+# 進入資料夾後啟動 : docker-compose up -d / -d detached 是在背景執行 /  docker ps -a 觀看目前所有 docker container 狀況 / docker-compose ps 觀看 docker-compose 狀況
+# 若要終止並移除 container 則可以使用 $ docker-compose down
+# http://127.0.0.1:5000/ 觀看成果
+# 服務分為兩個部分：一個是web, 另外一個是redis
+#   - web 的服務透過 Dockerfile 去建立還有定義, 並以 app.py 作為 ENTRYPOINT
+#   - redis 則是透過 image 去導入
+
+version: '3'
+services:
+
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+      
+  redis:
+    image: redis:alpine
+
+
